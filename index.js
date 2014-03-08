@@ -11,6 +11,10 @@ window.requestAnimFrame = (function() {
             window.setTimeout(callback, 1000/60)
         };
 })();
+var getChapterTitle = function(pageNum) {
+    if (pageNum <= 13) 
+        return "General Noise ("+pageNum + "/13)"
+}
 $(window).ready(function() {
     var query = '';
     if (location.search.substr(0,1) == '?')
@@ -45,6 +49,7 @@ $(window).ready(function() {
     });
     $('div.example').hide();
     $('div.page' + obj.pageNum).show();
+    $('div#chapter').html(getChapterTitle(obj.pageNum));
     var draw = function() {
         $('#log').html(obj.pageNum);
         switch (obj.pageNum) {
