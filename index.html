@@ -2,113 +2,245 @@
 <head>
 <script src='jquery-2.1.0.min.js' type='text/javascript'></script>
 <script src='index-bundle.js' type='text/javascript'></script>
+<link rel='stylesheet' href='reset.css' />
 <style>
+    html {
+    background-color:#C7B097;
+    }
     div.example {
         padding:1em;margin:1em;
         border:thin dotted black;
+    }
+    canvas {
+        float: left;
+    }
+    .nofloat {
+        float:none;
+    }
+    div.commentary {
+        padding:1em;margin:1em;
+        background-color:#98AFC7;
+        float:left;
+        font-family:sans-serif;
+        font-weight:bold;
+        color:white; 
+        text-shadow: black 1px 1px;
+        width:500px;
+    }
+    div.clear {
+        clear:both;
+    }
+    div.floatLeft {
+        float:left;
+    }
+    h2 {
+        font-size:20px;
+        padding:0.5em;
+    }
+    h3 {
+        font-size:20px;
+        padding:0.5em;
+    }
+    div.canvaslabel {
+        font-family:sans-serif;
+        font-weight:bold;
+    }
+    div.code {
+        white-space:pre-wrap;
+        background-color:black;
+        color:#00FF00;
+        font-family:monospace;
+        padding:1em;
+        font-size:14px;
     }
 </style>
 </head>
 <body>
 <h2>Randomness is Beautiful</h2>
 
-<div>    Hit left or right arrow key to navigate! </div>
+<div>Hit left or right arrow key to navigate! </div>
 
 <div class='example page1'>
     <canvas id='randomcanvas'></canvas>
-    <div>
-        <h3>Regular Noise</h3>
-        Each pixel is a random color.
+    <div class='commentary'>
+<h3>Regular Noise</h3>
+Each pixel is a random color.
+    </div>
+    <div class='clear'></div>
+    <div class='code'>
+var c = document.getElementById('mycanvas');
+noise.noise(c);
     </div>
 </div>
 <div class='example page2'>
     <canvas id='page2canvas'></canvas>
-    <div>
+    <div class='commentary'>
         <h3>First, we are going to start with a small patch.</h3>
         It's the same as the previous one, but we are just using a small 20x20 area.
+    </div>
+    <div class='clear'></div>
+    <div class='code'>
+var c = document.getElementById('mycanvas');
+noise.noise(c,{w:20,h:20});
     </div>
 </div>
 <div class='example page3'>
     <canvas id='page3canvas'></canvas>
-    <div>
+    <div class='commentary'>
         <h3>Regular Noise,but progressively bigger </h3>
         We are using a 40x40. In the next slide we will keep on going and overlap all the results
+    </div>
+    <div class='clear'></div>
+    <div class='code'>
+var c = document.getElementById('mycanvas');
+noise.noise(c,{w:40,h:40});
     </div>
 </div>
 <div class='example page4'>
     <canvas id='page4canvas'></canvas>
-    <div>
+    <div class='commentary'>
         <h3>Now we overlap these</h3>
+    </div>
+    <div class='clear'></div>
+    <div class='code'>
+var c = document.getElementById('mycanvas');
+noise.noise(c,{w:320,h:320,border:true});
+noise.noise(c,{w:160,h:160,border:true});
+noise.noise(c,{w:80,h:80,border:true});
+noise.noise(c,{w:40,h:40,border:true});
+noise.noise(c,{w:20,h:20,border:true});
     </div>
 </div>
 <div class='example page5'>
     <canvas id='page5canvas'></canvas>
-    <div>
+    <div class='commentary'>
         <h3>Now we make the smaller ones progressively lighter</h3>
         The next slide we upscale all the smaller ones to match the largest
-        
+    </div>
+    <div class='clear'></div>
+    <div class='code'>
+var c = document.getElementById('mycanvas');
+noise.noise(c,{w:320,h:320,border:true});
+noise.noise(c,{w:160,h:160,border:true,alpha:0.8});
+noise.noise(c,{w:80,h:80,border:true,alpha:0.6});
+noise.noise(c,{w:40,h:40,border:true,alpha:0.4});
+noise.noise(c,{w:20,h:20,border:true,alpha:0.2});
     </div>
 </div>
 <div class='example page6'>
     <canvas id='page6canvas'></canvas>
-    <div>
+    <div class='commentary'>
         <h3>Each smaller one is now upscaled to the largest size</h3>
+    </div>
+    <div class='clear'></div>
+    <div class='code'>
+var c = document.getElementById('mycanvas');
+noise.noise(c,{w:320,h:320});
+noise.noise(c,{w:160,h:160,fillwidth:320,fillheight:320,alpha:0.8});
+noise.noise(c,{w:80,h:80,fillwidth:320,fillheight:320,alpha:0.6});
+noise.noise(c,{w:40,h:40,fillwidth:320,fillheight:320,alpha:0.4});
+noise.noise(c,{w:20,h:20,fillwidth:320,fillheight:320,alpha:0.2});
     </div>
 </div>
 <div class='example page7'>
     <canvas id='page7canvas'></canvas>
-    <div>
+    <div class='commentary'>
         <h3>Now we adjust the blending mode to lighten and global alpha for each different size</h3>
+    </div>
+    <div class='clear'></div>
+    <div class='code'>
+var c = document.getElementById('mycanvas');
+noise.octaveNoise(c,{octaves:8});
     </div>
 </div>
 <div class='example page8'>
     <canvas id='page8canvas_a'></canvas>
     <canvas id='page8canvas_b'></canvas>
-    <div>
+    <div class='commentary'>
         <h3>Smoothing</h3>
         Here is the before and after. In the next page we will see that we can use smoothing on the previous upscale example
+    </div>
+    <div class='clear'></div>
+    <div class='code'>
+var c = document.getElementById('mycanvas');
+noise.noise(c,{w:40,h:40,fillwidth:c.width,fillheight:c.height});
+noise.noise(c2,{w:40,h:40,fillwidth:c.width,fillheight:c.height,isSmooth:true});
     </div>
 </div>
 <div class='example page9'>
     <canvas id='page9canvas_a'></canvas>
     <canvas id='page9canvas_b'></canvas>
-    <div>
+    <div class='commentary'>
         <h3>We can now use smoothing if we'd like.</h3>
+    </div>
+    <div class='clear'></div>
+    <div class='code'>
+var c = document.getElementById('mycanvas');
+noise.octaveNoise(rc,{octaves:8,isSmooth:false});
+noise.octaveNoise(c,{octaves:8,isSmooth:true});
     </div>
 </div>
 <div class='example page10'>
     <canvas id='page10canvas'></canvas>
-    <div>
+    <div class='commentary'>
         <h3>Pretty cool?</h3>
+    </div>
+    <div class='clear'></div>
+    <div class='code'>
+var c = document.getElementById('mycanvas');
+noise.octaveNoise(c,{octaves:8,isSmooth:true});
     </div>
 </div>
 <div class='example page11'>
     <canvas id='page11canvas'></canvas>
-    <div>
+    <div class='commentary'>
         <h3>Let's do a extreme upscale without smoothing.</h3>
+    </div>
+    <div class='clear'></div>
+    <div class='code'>
+var c = document.getElementById('mycanvas');
+noise.noise(c,{w:2,h:2,fillwidth:oc.width,fillheight:c.height});
     </div>
 </div>
 <div class='example page12'>
     <canvas id='page12canvas'></canvas>
-    <div>
+    <div class='commentary'>
         <h3>Turn on smoothing.</h3>
+    </div>
+    <div class='clear'></div>
+    <div class='code'>
+var c = document.getElementById('mycanvas');
+noise.noise(c,{w:2,h:2,fillwidth:c.width,fillheight:c.height,isSmooth:true});
     </div>
 </div>
 <div class='example page13'>
     <div>
-    <canvas id='page13canvas_aa'></canvas>
-    <canvas id='page13canvas_ab'></canvas>
-    <canvas id='page13canvas_ac'></canvas>
-    <canvas id='page13canvas_ad'></canvas>
+    <div class='floatLeft' ><div class='canvaslabel'>1 by 1</div> <canvas class='nofloat' id='page13canvas_aa'></canvas></div>
+    <div class='floatLeft' ><div class='canvaslabel'>1 by 2</div> <canvas class='nofloat' id='page13canvas_ab'></canvas></div>
+    <div class='floatLeft' ><div class='canvaslabel'>3 by 5</div> <canvas class='nofloat' id='page13canvas_ac'></canvas></div>
+    <div class='floatLeft' ><div class='canvaslabel'>10 by 10</div> <canvas class='nofloat' id='page13canvas_ad'></canvas></div>
     </div>
-    <div>
-    <canvas id='page13canvas_a'></canvas>
-    <canvas id='page13canvas_b'></canvas>
-    <canvas id='page13canvas_c'></canvas>
-    <canvas id='page13canvas_d'></canvas>
-    </div>
-    <div>
+    <div class='commentary'>
         <h3>Different examples</h3>
+    </div>
+    <div class='clear'>
+    <div class='floatLeft' ><div class='canvaslabel'>1 by 1</div> <canvas class='nofloat' id='page13canvas_a'></canvas></div>
+    <div class='floatLeft' ><div class='canvaslabel'>1 by 2</div> <canvas class='nofloat' id='page13canvas_b'></canvas></div>
+    <div class='floatLeft' ><div class='canvaslabel'>3 by 5</div> <canvas class='nofloat' id='page13canvas_c'></canvas></div>
+    <div class='floatLeft' ><div class='canvaslabel'>10 by 10</div> <canvas class='nofloat' id='page13canvas_d'></canvas></div>
+    </div>
+    <div class='clear'></div>
+    <div class='code'>
+var c = document.getElementById('mycanvas');
+noise.noise(ac,{w:1,h:1,fillwidth:ac.width,fillheight:ac.height,isSmooth:false});
+noise.noise(ac2,{w:1,h:2,fillwidth:ac.width,fillheight:ac.height,isSmooth:false});
+noise.noise(ac3,{w:3,h:5,fillwidth:ac.width,fillheight:ac.height,isSmooth:false});
+noise.noise(ac4,{w:10,h:10,fillwidth:ac.width,fillheight:ac.height,isSmooth:false});
+var c = document.getElementById('mycanvas');
+noise.noise(c,{w:1,h:1,fillwidth:c.width,fillheight:c.height,isSmooth:true});
+noise.noise(c2,{w:1,h:2,fillwidth:c.width,fillheight:c.height,isSmooth:true});
+noise.noise(c3,{w:3,h:5,fillwidth:c.width,fillheight:c.height,isSmooth:true});
+noise.noise(c4,{w:10,h:10,fillwidth:c.width,fillheight:c.height,isSmooth:true});
     </div>
 </div>
  <h2> Log</h2>
